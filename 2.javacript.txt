@@ -1,0 +1,10 @@
+// Countdown đến ngày sự kiện
+$('#countdown').countdown('2025/08/30', function(event) {
+  $(this).html(event.strftime('%D days %H:%M:%S'));
+});
+
+// Form đăng ký (mẫu)
+$('form').on('submit', function(e){
+  e.preventDefault();
+  alert('Cảm ơn bạn đã đăng ký!');
+});
