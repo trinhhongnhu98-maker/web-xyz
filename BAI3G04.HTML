@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danh sách Phim</title>
+<style>
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-bg: #f0f0f0;
+}
+body.dark {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --card-bg: #1e1e1e;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--card-bg);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+header button {
+    padding: 8px 12px;
+    border: none;
+    background: #ff9800;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+}
+.sidebar {
+    background: var(--card-bg);
+    padding: 15px;
+}
+#search-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+.movie-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+.movie-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+.movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+.movie-card h3 {
+    margin: 10px;
+}
+.movie-card p {
+    margin: 0 10px 10px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+}
+.close-button {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.modal img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.modal h2 {
+    margin: 10px 0;
+}
+.modal p {
+    margin: 5px 0;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🎬 Danh sách Phim</h1>
+    <button id="toggle-theme">🌙 Chế độ Tối</button>
+</header>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Bộ lọc</h2>
+        <input type="text" id="search-input" placeholder="Tìm kiếm phim...">
+        <div id="genre-filters"></div>
+    </aside>
+
+    <main class="main-content" id="movies-container">
+        <!-- Movie cards sẽ được sinh ra bằng JS -->
+    </main>
+</div>
+
+<!-- Modal chi tiết phim -->
+<div id="movie-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <img id="modal-poster" src="" alt="">
+        <h2 id="modal-title"></h2>
+        <p id="modal-genre"></p>
+        <p id="modal-year"></p>
+        <p id="modal-director"></p>
+        <p id="modal-cast"></p>
+        <p id="modal-description"></p>
+    </div>
+</div>
+
+<script>
+// Dữ liệu phim
+const movies = [
+    { name: "Avatar", genre: "Hành động", year: 2009, image: "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SL1024_.jpg", director: "James Cameron", cast: "Sam Worthington, Zoe Saldana", description: "Một hành tinh Pandora xa xôi, cuộc phiêu lưu của Jake Sully." },
+    { name: "Avengers: Endgame", genre: "Hành động", year: 2019, image: "https://m.media-amazon.com/images/I/81p+xe8cbnL._AC_SL1500_.jpg", director: "Anthony Russo, Joe Russo", cast: "Robert Downey Jr., Chris Evans", description: "Avengers tập hợp lại để chống lại Thanos và cứu vũ trụ." },
+    { name: "Interstellar", genre: "Khoa học viễn tưởng", year: 2014, image: "https://m.media-amazon.com/images/I/71c05lTE03L._AC_SL1024_.jpg", director: "Christopher Nolan", cast: "Matthew McConaughey, Anne Hathaway", description: "Một nhóm phi hành gia tìm kiếm hành tinh mới cho nhân loại." },
+    { name: "Titanic", genre: "Tình cảm", year: 1997, image: "https://upload.wikimedia.org/wikipedia/en/2/2e/Titanic_poster.jpg", director: "James Cameron", cast: "Leonardo DiCaprio, Kate Winslet", description: "Câu chuyện tình yêu trên tàu Titanic nổi tiếng." },
+    { name: "Joker", genre: "Tâm lý", year: 2019, image: "https://upload.wikimedia.org/wikipedia/en/e/e1/Joker_%282019_film%29_poster.jpg", director: "Todd Phillips", cast: "Joaquin Phoenix", description: "Câu chuyện về nguồn gốc của Joker, kẻ thù huyền thoại của Batman." }
+];
+
+// DOM elements
+const moviesContainer = document.getElementById("movies-container");
+const genreFilters = document.getElementById("genre-filters");
+const searchInput = document.getElementById("search-input");
+const toggleBtn = document.getElementById("toggle-theme");
+
+// Modal elements
+const modal = document.getElementById("movie-modal");
+const modalPoster = document.getElementById("modal-poster");
+const modalTitle = document.getElementById("modal-title");
+const modalGenre = document.getElementById("modal-genre");
+const modalYear = document.getElementById("modal-year");
+const modalDirector = document.getElementById("modal-director");
+const modalCast = document.getElementById("modal-cast");
+const modalDescription = document.getElementById("modal-description");
+const modalClose = document.querySelector(".close-button");
+
+// Hiển thị phim
+function renderMovies(list) {
+    moviesContainer.innerHTML = "";
+    list.forEach(movie => {
+        const card = document.createElement("div");
+        card.classList.add("movie-card");
+        card.innerHTML = `
+            <img src="${movie.image}" alt="${movie.name}">
+            <h3>${movie.name}</h3>
+            <p>${movie.year} - ${movie.genre}</p>
+        `;
+        card.addEventListener("click", () => openModal(movie));
+        moviesContainer.appendChild(card);
+    });
+}
+
+// Tạo checkbox thể loại tự động
+function renderGenreFilters() {
+    const genres = [...new Set(movies.map(m => m.genre))];
+    genres.forEach(genre => {
+        const div = document.createElement("div");
+        div.innerHTML = `<label><input type="checkbox" value="${genre}"> ${genre}</label>`;
+        genreFilters.appendChild(div);
+    });
+}
+
+// Lọc phim theo thể loại và tên
+function filterMovies() {
+    const checkedGenres = Array.from(document.querySelectorAll("#genre-filters input:checked")).map(i => i.value);
+    const searchTerm = searchInput.value.toLowerCase();
+    const filtered = movies.filter(movie => {
+        const matchGenre = checkedGenres.length === 0 || checkedGenres.includes(movie.genre);
+        const matchSearch = movie.name.toLowerCase().includes(searchTerm);
+        return matchGenre && matchSearch;
+    });
+    renderMovies(filtered);
+}
+
+// Debounce function
+function debounce(func, delay) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+// Modal functions
+function openModal(movie) {
+    modalPoster.src = movie.image;
+    modalTitle.textContent = movie.name;
+    modalGenre.textContent = `Thể loại: ${movie.genre}`;
+    modalYear.textContent = `Năm: ${movie.year}`;
+    modalDirector.textContent = `Đạo diễn: ${movie.director}`;
+    modalCast.textContent = `Diễn viên: ${movie.cast}`;
+    modalDescription.textContent = movie.description;
+    modal.style.display = "flex";
+}
+modalClose.addEventListener("click", () => modal.style.display = "none");
+window.addEventListener("click", e => {
+    if (e.target === modal) modal.style.display = "none";
+});
+
+// Light/Dark Mode với localStorage
+function setTheme(theme) {
+    if (theme === "dark") document.body.classList.add("dark");
+    else document.body.classList.remove("dark");
+    localStorage.setItem("theme", theme);
+    toggleBtn.textContent = theme === "dark" ? "☀️ Chế độ Sáng" : "🌙 Chế độ Tối";
+}
+toggleBtn.addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark");
+    setTheme(isDark ? "dark" : "light");
+});
+const savedTheme = localStorage.getItem("theme") || "light";
+setTheme(savedTheme);
+
+// Events
+searchInput.addEventListener("input", debounce(filterMovies, 400));
+genreFilters.addEventListener("change", filterMovies);
+
+// Init
+renderGenreFilters();
+renderMovies(movies);
+</script>
+</body>
+</html>
