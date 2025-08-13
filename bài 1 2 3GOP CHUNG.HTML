@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XYZ Headphones - Gallery Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+        }
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: white;
+            background: #3f00ff;
+            transition: background 0.3s ease;
+            z-index: 1000;
+        }
+        header.scrolled {
+            background: #2b00aa;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        nav li {
+            margin: 0 15px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding-top: 100px;
+        }
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f4f4f4;
+        }
+        .hero h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .hero button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3f00ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hero button:hover {
+            background-color: #2b00aa;
+        }
+        .hero img {
+            width: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        /* FEATURES */
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 50px 20px;
+            background: white;
+        }
+        .feature {
+            width: 30%;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 10px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            margin-bottom: 20px;
+        }
+        .feature.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .feature h3 {
+            margin-bottom: 10px;
+            color: #3f00ff;
+        }
+        .feature p {
+            color: #555;
+            font-size: 14px;
+        }
+        /* GALLERY */
+        .gallery {
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        .gallery h2 {
+            font-size: 24px;
+            color: #3f00ff;
+            margin-bottom: 20px;
+        }
+        .main-image img {
+            width: 60%;
+            max-width: 600px;
+            height: auto;
+            border: 3px solid #333;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+        .thumbnails img {
+            width: 100px;
+            height: 70px;
+            object-fit: cover;
+            margin: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-radius: 10px;
+        }
+        .thumbnails img:hover {
+            transform: scale(1.1);
+        }
+        /* FOOTER */
+        footer {
+            background-color: #3f00ff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    XYZ Headphones
+    <nav>
+        <ul>
+            <li><a href="#">Trang chủ</a></li>
+            <li><a href="#">Tính năng</a></li>
+            <li><a href="#">Thư viện ảnh</a></li>
+            <li><a href="#">Liên hệ</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h2>Âm Thanh Vượt Trội - Tự Do Tuyệt Đối</h2>
+        <p>Trải nghiệm âm thanh chất lượng cao mọi lúc, mọi nơi.</p>
+        <button>Mua Ngay</button>
+        <br>
+        <img src="https://www.w3schools.com/w3images/headphones.jpg" alt="Tai nghe XYZ">
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="feature">
+            <h3>🎧 Chống ồn chủ động</h3>
+            <p>Loại bỏ tiếng ồn để tận hưởng âm nhạc trọn vẹn.</p>
+        </div>
+        <div class="feature">
+            <h3>🔋 Pin 24 giờ</h3>
+            <p>Sử dụng liên tục mà không lo hết pin.</p>
+        </div>
+        <div class="feature">
+            <h3>📡 Bluetooth 5.2</h3>
+            <p>Kết nối ổn định, tốc độ truyền tải nhanh.</p>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery">
+        <h2>Thư viện ảnh</h2>
+        <div class="main-image">
+            <img id="largeImage" src="https://picsum.photos/id/1015/600/400" alt="Ảnh lớn">
+        </div>
+        <div class="thumbnails">
+            <img src="https://picsum.photos/id/1015/200/150" data-full="https://picsum.photos/id/1015/600/400" alt="Thumb 1">
+            <img src="https://picsum.photos/id/1025/200/150" data-full="https://picsum.photos/id/1025/600/400" alt="Thumb 2">
+            <img src="https://picsum.photos/id/1035/200/150" data-full="https://picsum.photos/id/1035/600/400" alt="Thumb 3">
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 XYZ Headphones. All Rights Reserved.</p>
+    <p>
+        <a href="#">Facebook</a> | 
+        <a href="#">Instagram</a> | 
+        <a href="#">Twitter</a>
+    </p>
+</footer>
+
+<script>
+    // Gallery - đổi ảnh lớn khi click thumbnail
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+    const largeImage = document.getElementById('largeImage');
+
+    thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            const fullImg = thumb.getAttribute('data-full');
+            largeImage.setAttribute('src', fullImg);
+        });
+    });
+
+    // Scroll Effect - đổi màu header khi cuộn
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // Animation khi hiện trên màn hình (Features)
+    const features = document.querySelectorAll('.feature');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    features.forEach(feature => {
+        observer.observe(feature);
+    });
+</script>
+
+</body>
+</html>
