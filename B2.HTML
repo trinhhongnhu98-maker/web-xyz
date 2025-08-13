@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XYZ Headphones</title>
+
+<!-- Font Google -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #dfe9f3, #ffffff);
+        color: #333;
+    }
+
+    /* HEADER với Glassmorphism */
+    header {
+        background: rgba(63, 0, 255, 0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: white;
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    nav li {
+        margin: 0 15px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+        color: #ffeb3b;
+    }
+
+    /* HERO */
+    .hero {
+        text-align: center;
+        padding: 50px 20px;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .hero h2 {
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .hero button {
+        padding: 12px 28px;
+        font-size: 16px;
+        background: linear-gradient(90deg, #3f00ff, #7a5cff);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .hero button:hover {
+        transform: scale(1.05);
+        background: linear-gradient(90deg, #2b00aa, #5c4bff);
+    }
+
+    .hero img {
+        width: 320px;
+        margin-top: 25px;
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+    }
+
+    .hero img:hover {
+        transform: scale(1.05);
+    }
+
+    /* FEATURES */
+    .features {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 25px;
+        padding: 50px 20px;
+    }
+
+    .feature {
+        width: 260px;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(5px);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .feature:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature h3 {
+        color: #3f00ff;
+        margin-bottom: 10px;
+    }
+
+    .feature p {
+        color: #555;
+    }
+
+    /* GALLERY */
+    .gallery {
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .gallery h2 {
+        font-size: 26px;
+        color: #3f00ff;
+        margin-bottom: 25px;
+    }
+
+    .gallery-images {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    .gallery-images img {
+        width: 100%;
+        height: 170px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-images img:hover {
+        transform: scale(1.05);
+    }
+
+    /* FOOTER */
+    footer {
+        background-color: #3f00ff;
+        color: white;
+        text-align: center;
+        padding: 25px;
+        margin-top: 40px;
+    }
+
+    footer a {
+        color: #ffeb3b;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+        color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        nav li {
+            margin: 5px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>XYZ Headphones</h1>
+    <nav>
+        <ul>
+            <li><a href="#">Trang chủ</a></li>
+            <li><a href="#">Tính năng</a></li>
+            <li><a href="#">Thư viện ảnh</a></li>
+            <li><a href="#">Liên hệ</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h2>Âm Thanh Vượt Trội - Tự Do Tuyệt Đối</h2>
+        <p>Trải nghiệm âm thanh chất lượng cao mọi lúc, mọi nơi.</p>
+        <button>Mua Ngay</button>
+        <br>
+        <img src="https://www.w3schools.com/w3images/headphones.jpg" alt="Tai nghe XYZ">
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="feature">
+            <h3>🎧 Chống ồn chủ động</h3>
+            <p>Loại bỏ tiếng ồn để tận hưởng âm nhạc trọn vẹn.</p>
+        </div>
+        <div class="feature">
+            <h3>🔋 Pin 24 giờ</h3>
+            <p>Sử dụng liên tục mà không lo hết pin.</p>
+        </div>
+        <div class="feature">
+            <h3>📡 Bluetooth 5.2</h3>
+            <p>Kết nối ổn định, tốc độ truyền tải nhanh.</p>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery">
+        <h2>Thư viện ảnh</h2>
+        <div class="gallery-images">
+            <img src="https://www.w3schools.com/w3images/team1.jpg" alt="Ảnh 1">
+            <img src="https://www.w3schools.com/w3images/team2.jpg" alt="Ảnh 2">
+            <img src="https://www.w3schools.com/w3images/team3.jpg" alt="Ảnh 3">
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 XYZ Headphones. All Rights Reserved.</p>
+    <p>
+        <a href="#">Facebook</a> | 
+        <a href="#">Instagram</a> | 
+        <a href="#">Twitter</a>
+    </p>
+</footer>
+
+</body>
+</html>
